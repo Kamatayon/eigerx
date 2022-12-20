@@ -21,14 +21,17 @@ maintainer:         wowegable@gmail.com
 -- category:
 extra-source-files: CHANGELOG.md
 
-executable eigerx
-    main-is:          Main.hs
+common deps
+  build-depends:    base ^>=4.14.3.0, containers^>=0.6.6
 
-    -- Modules included in this executable, other than Main.
-    -- other-modules:
+library eigerx-lib
+    import: deps
+    hs-source-dirs:   src 
+    exposed-modules:  Products
 
-    -- LANGUAGE extensions used by modules in this package.
-    -- other-extensions:
-    build-depends:    base ^>=4.14.3.0, containers^>=0.6.6
-    hs-source-dirs:   app
-    default-language: Haskell2010
+test-suite eigerx-testsuite
+    import: deps
+    type:             exitcode-stdio-1.0
+    main-is:          TestMain.hs
+    hs-source-dirs:   tests
+    build-depends:    HUnit, eigerx-lib
